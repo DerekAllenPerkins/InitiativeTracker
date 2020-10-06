@@ -5,7 +5,6 @@
 *       Dungeons & Dragons Encounters   *
 ****************************************/
 
-#include <iostream>
 #include <vector>
 #include "Player.h"
 

@@ -16,6 +16,7 @@ void gameLoop(vector<Player> fighters);                 // This will handle the 
 vector<Player> reorder(std::vector<Player> p);          // Sort combatant list. Prioritizes players over monsters.
 vector<Player> turn(vector<Player> p);                  // Rotate the vector to put the current actor at index 0.
 Player rename(Player p, Console c);
+vector<Player> add(vector<Player> p, Console c);        // Adds a combatant to the vector
 
 
 int main()
@@ -104,20 +105,27 @@ void gameLoop(vector<Player> fighters)
         }
 
         c.print("------------------------------------------------------------------------\n\n");
-        c.print("1.) Edit (Rename a player or NPC)\n");
-        c.print("2.) Exit\n");
+        c.print("1.) Add (NOT IMPLEMENTED)\n");
+        c.print("2.) Edit (Rename a player or NPC)\n");
+        c.print("3.) Remove (NOT IMPLEMENTED)\n");
+        c.print("4.) Exit\n");
 
         comm = c.getString("\nEnter command ('exit' to leave): ");
 
-        if (comm == "exit" || comm == "2")
+        if (comm == "exit" || comm == "4")
         {
             exit = true;
         }
-        else if (comm == "edit" || comm == "1")
+        else if (comm == "edit" || comm == "2")
         {
             int x = c.getInt("Select a player to edit:   ");
             x--;
             fighters[x] = rename(fighters[x], c);
+        }
+        else if (comm == "add" || comm == "1")
+        {
+            fighters = add(fighters, c);
+            fighters = reorder(fighters);
         }
         else
         {
@@ -215,3 +223,22 @@ Player rename(Player p, Console c)                      // Changes the name of a
 
     return p;
 }
+
+vector<Player> add(vector<Player> p, Console c)
+{
+    Player entry;
+    entry.setName(c.getString("New player name:\t"));
+    entry.setInit(c.getInt("Initiative:\t"));
+
+    p.push_back(entry);
+
+    return p;
+}
+/*
+vector<Player> remove(vector<Player> p, Console c)
+{
+    // some shit
+
+    return p;
+}
+*/

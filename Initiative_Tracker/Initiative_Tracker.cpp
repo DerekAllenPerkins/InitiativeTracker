@@ -17,6 +17,7 @@ vector<Player> reorder(std::vector<Player> p);          // Sort combatant list. 
 vector<Player> turn(vector<Player> p);                  // Rotate the vector to put the current actor at index 0.
 Player rename(Player p, Console c);
 vector<Player> add(vector<Player> p, Console c);        // Adds a combatant to the vector
+int getIndex(vector<Player> p, int choice);             // Gets the vector index for a selected player
 
 
 int main()
@@ -120,7 +121,8 @@ void gameLoop(vector<Player> fighters)
         {
             int x = c.getInt("Select a player to edit:   ");
             x--;
-            fighters[x] = rename(fighters[x], c);
+            int index = getIndex(fighters, x);                      // Add input validation
+            fighters[index] = rename(fighters[index], c);
         }
         else if (comm == "add" || comm == "1")
         {
@@ -233,6 +235,24 @@ vector<Player> add(vector<Player> p, Console c)
     p.push_back(entry);
 
     return p;
+}
+
+int getIndex(vector<Player> p, int choice)
+{
+    int i = -1;                                             // Default value is an error code
+
+    for (int x = 0; x < p.size(); x++)                      // Iterate through the list
+    {
+        int order = p[x].getOrder();                        // Record the currently selected player's initiative order
+
+        if (order == choice)                                // Check current order number with user-selected number. If it matches...
+        {
+            i = x;                                          // Set the return value
+            break;                                          // Break loop for optimization. Don't need to continue if value is found.
+        }
+    }
+
+    return i;
 }
 /*
 vector<Player> remove(vector<Player> p, Console c)

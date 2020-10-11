@@ -2,7 +2,6 @@
 #define H_Player
 #endif
 
-#include <string>
 #include "Console.h"
 
 class Player

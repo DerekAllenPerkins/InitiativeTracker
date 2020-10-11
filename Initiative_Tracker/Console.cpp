@@ -1,7 +1,4 @@
 #include "Console.h"
-#include <typeinfo>
-#include <iostream>
-#include <string>
 
 void Console::print(std::string output)
 {

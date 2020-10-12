@@ -106,7 +106,7 @@ void gameLoop(vector<Player> fighters)
         }
 
         c.print("------------------------------------------------------------------------\n\n");
-        c.print("1.) Add (NOT IMPLEMENTED)\n");
+        c.print("1.) Add (Add a combatant)\n");
         c.print("2.) Edit (Rename a player or NPC)\n");
         c.print("3.) Remove (NOT IMPLEMENTED)\n");
         c.print("4.) Exit\n");
@@ -116,6 +116,16 @@ void gameLoop(vector<Player> fighters)
         if (comm == "exit" || comm == "4")
         {
             exit = true;
+        }
+        else if (comm == "remove" || comm == "3")
+        {
+            int x = c.getInt("Select a player to remove:   ");          // User selects for removal
+            x--;
+            x = getIndex(fighters, x);                                  // Get the index for selected combatant
+            fighters.erase(fighters.begin() + x);                       // Remove combatant
+            fighters = reorder(fighters);                               // Reorders the vector to reassign order numbers
+            for (int i = 0; i < pTurn; i++)                             // Place combatants in the order in which we left off.
+                fighters = turn(fighters);
         }
         else if (comm == "edit" || comm == "2")
         {

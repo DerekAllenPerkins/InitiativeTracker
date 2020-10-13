@@ -11,13 +11,14 @@
 using namespace std;
 
 void build(Console c);                                  // User entries that build the player lists before concatenating them into a master list.
-void cont(Console c);                                   // After combat ends, this will handle whether or not the user wants to continue
+void cont(Console c, string time);                      // After combat ends, this will handle whether or not the user wants to continue
 void gameLoop(vector<Player> fighters);                 // This will handle the loop until the user says that combat has ended.
 vector<Player> reorder(std::vector<Player> p);          // Sort combatant list. Prioritizes players over monsters.
 vector<Player> turn(vector<Player> p);                  // Rotate the vector to put the current actor at index 0.
 Player rename(Player p, Console c);
 vector<Player> add(vector<Player> p, Console c);        // Adds a combatant to the vector
 int getIndex(vector<Player> p, int choice);             // Gets the vector index for a selected player
+string timePassed(int rounds);
 
 
 int main()
@@ -90,13 +91,17 @@ void gameLoop(vector<Player> fighters)
     int pTurn = 0;                          // Increment after a player goes. After all players go, then increment turn.
     int round = 1;                          // Increment after all players go.
     int combatants = fighters.size();       // Store the number of players, for tracking turns.
+    string time;
 
     while (!exit)
     {
+        time = timePassed(round);
+
         system("CLS");
 
         c.print("\t\t\tInitiative");
-        c.print("\t\tRound: " + std::to_string(round) + "\n------------------------------------------------------------------------\n\n");
+        c.print("\t\tRound: " + std::to_string(round) + "\t" + time);
+        c.print("\n------------------------------------------------------------------------\n\n");
 
         for (int i = 0; i < fighters.size(); i++)
         {
@@ -151,14 +156,16 @@ void gameLoop(vector<Player> fighters)
             }
         }
     }
-    cont(c);
+    cont(c, time);
 }
 
-void cont(Console c)
+void cont(Console c, string time)
 {
     system("CLS");
 
     std::string comm = "Random shit";
+
+    c.print("Encounter ended! Time elapsed: " + time + "\n");
 
     while (comm != "y")
     {
@@ -263,6 +270,51 @@ int getIndex(vector<Player> p, int choice)
     }
 
     return i;
+}
+
+// Time Conversion
+
+string timePassed(int rounds)
+{
+    int seconds = rounds * 6;
+    int minutes = 0;
+    int hours = 0;
+    int temp = 0;
+
+    if (seconds > 59)
+    {
+        minutes = seconds / 60;
+        seconds = seconds % 60;
+    }
+
+    if (minutes > 59)
+    {
+        hours = minutes / 60;
+        minutes = minutes % 60;
+    }
+
+    string elapse = "";
+    string s = to_string(seconds) + " seconds";
+    string m = to_string(minutes) + " minutes";
+    string h = to_string(hours) + " hours";
+
+    //elapse += s;
+    if (hours > 0)
+        elapse += h;
+
+    if (minutes > 0 && hours > 0)
+        elapse += ", " + m;
+    else if (minutes > 0)
+        elapse += m;
+
+    if (seconds > 0 && minutes > 0)
+        elapse += ", " + s;
+    else if (seconds > 0)
+        elapse += s;
+    
+    
+
+    return elapse;
 }
 /*
 vector<Player> remove(vector<Player> p, Console c)

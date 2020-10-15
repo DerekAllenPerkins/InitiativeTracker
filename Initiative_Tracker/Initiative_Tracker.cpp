@@ -18,7 +18,7 @@ vector<Player> turn(vector<Player> p);                  // Rotate the vector to 
 Player rename(Player p, Console c);
 vector<Player> add(vector<Player> p, Console c);        // Adds a combatant to the vector
 int getIndex(vector<Player> p, int choice);             // Gets the vector index for a selected player
-string timePassed(int rounds);
+string timePassed(int rounds);                          // Returns a display message for elapsed time
 
 
 int main()
@@ -170,7 +170,6 @@ void cont(Console c, string time)
     while (comm != "y")
     {
         comm = c.getString("\nNew encounter (y/n)?     ");
-        //comm = tolower(putchar(tolower(comm[0])));
 
         if (comm == "y" || comm == "Y")
         {
@@ -298,7 +297,6 @@ string timePassed(int rounds)
     string m = to_string(minutes) + " minutes";
     string h = to_string(hours) + " hours";
 
-    //elapse += s;
     if (hours > 0)
         elapse += h;
 
@@ -312,15 +310,5 @@ string timePassed(int rounds)
     else if (seconds > 0)
         elapse += s;
     
-    
-
     return elapse;
 }
-/*
-vector<Player> remove(vector<Player> p, Console c)
-{
-    // some shit
-
-    return p;
-}
-*/

@@ -113,7 +113,7 @@ void gameLoop(vector<Player> fighters)
         c.print("------------------------------------------------------------------------\n\n");
         c.print("1.) Add (Add a combatant)\n");
         c.print("2.) Edit (Rename a player or NPC)\n");
-        c.print("3.) Remove (NOT IMPLEMENTED)\n");
+        c.print("3.) Remove (Remove a combatant)\n");
         c.print("4.) Exit\n");
 
         comm = c.getString("\nEnter command ('exit' to leave): ");
